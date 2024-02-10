@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USER: "/nikeclone/dockerhub/user_name"
+    DOCKER_PASS: "/nikeclone/dockerhub/pass"
+    DOCKER_URL: "docker_url"
+
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+  pre_build:
+    commands:
+    - npm install
+  build:
+    commands:
+    - echo "Building"
+    - docker build -t "$DOCKER_URL/$DOCKER_USER/tesla-clone:latest" .
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker push "$DOCKER_URL/$DOCKER_USER/tesla-clone:latest"
+  post_build:
+    commands:
+    - echo "Build Successful"
+
+artifacts:
+  files:
+  - '**/*'
+  base-directory: .

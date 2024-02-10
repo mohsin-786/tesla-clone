@@ -1,0 +1,120 @@
+html{
+    scroll-snap-type: y mandatory;
+    /* overflow-y: scroll; */
+}
+section{
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+}
+
+.container{
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+.items{
+    position: fixed;
+    top: 0;
+    opacity: 0;
+    z-index: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 95px 0;
+    transition: .2s ease-in;
+}
+.open .items{
+    opacity: 1;
+}
+
+
+.top{
+    text-align: center;
+    opacity: 0;
+    animation: revealItems .8s forwards;
+    animation-delay: 1s;
+}
+.top a{
+    font-size: 16px;
+    padding: 1px;
+    color: black;
+    border-bottom: 2px solid black;
+}
+
+.top h1{
+    padding: 0 10px;
+    font-size: 2.5rem;
+    color: black;
+}
+
+
+.buttom{
+    display: flex;
+    align-items: center;
+}
+
+button{
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    height: 3rem;
+    width: 265px;
+    font-size: 15px;
+    letter-spacing: .8px;
+    font-weight: 500;
+    padding: 5px;
+    margin: 0 12px;
+    opacity: 0;
+    animation: revealItems .5s forwards;
+    animation-delay: 1s;
+}
+@keyframes revealItems{
+    30%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}
+
+.items img{
+    height: 350px;
+}
+
+@media screen and (max-width: 720px){
+    .buttom{
+        display: flex;
+        flex-direction: column;
+    }
+    button{
+        height: 2.6rem;
+        width: 270px;
+        font-size: 16px;
+        margin: 6px 0;
+    }
+}
+@media screen and (max-width:600px){
+    .top h1{
+        font-size: 2.3rem;
+    }
+    .top a{
+        font-size: 14px;
+        padding: 1px;
+        border-bottom: 1px solid black;
+    }
+    .items{
+        padding: 0;
+        margin-top: 15px;
+        padding: 25% 0;
+        transition: .1s ease-in;
+    }
+}

@@ -1,0 +1,176 @@
+.header{
+    position: fixed;
+    display: grid;
+    grid-template-columns: 200px auto 200px;
+    text-align: center;
+    align-items: center;
+    height: 10vh;
+    width: 100vw;
+    padding: 0 3%;
+    background-color: transparent;
+    opacity: 0;
+    z-index: 1;
+    animation: delayHeader 1s forwards;
+    animation-delay: .5s;
+}
+@keyframes delayHeader{
+    50%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}
+
+.menu1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo{
+    /* height: 4rem;    */
+    width: 11rem;
+}
+.logo img{
+    opacity: 0;
+    animation: revealLogo .5s forwards;
+    animation-delay: 1s;
+}
+@keyframes revealLogo{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+
+
+.nav-items{
+    display: flex;
+    flex-direction: row;
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+}
+
+ul li a{
+    padding: 10px;
+    font-size: 16px;
+    color: black;
+}
+
+
+ul li a:hover{
+    color: #de3450;
+}
+
+.hamburgerMenu{
+    position: fixed;
+    top: 0;
+    right: -340px;
+    width: 340px;
+    height: 100vh;
+    background-color: white;
+    z-index: 1;
+    /* transition: right .4s ease-in-out; */
+    opacity: 0;
+    transition-delay: .2s;
+    transition:.5s ease-in-out;
+
+}
+.hamburgerMenu.open{
+    right: 0%;
+    opacity: 1;
+}
+.hamburgerMenu button{
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 3px;
+    height: 40px;
+    width: 40px;
+    padding: 10px;
+    margin: 25px;
+    background-color: transparent;
+    transition: .3s;
+}.hamburgerMenu button:hover{
+    background-color: rgb(229, 229, 229);
+}
+
+.hamburgerMenu ul{
+    display: flex;
+    flex-direction:column ;
+    padding: 0 40px;
+    padding-top: 80px;
+}
+.hamburgerMenu ul li{
+    font-size: 16px;
+    letter-spacing: .3px;
+    padding: 8px 0;
+    margin: 6px 0;
+    border-radius: 3px;
+    transition: .5s;
+}
+.hamburgerMenu ul li:hover{
+    background-color: rgb(229, 229, 229);
+}.hamburgerMenu ul li a:hover{
+    color: black;
+}
+
+.background{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0, .3);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+.background.open{
+    display: initial;
+}
+
+@media screen and (max-width:1200px){
+    .menu1{
+        display: none;
+    }
+    .menu2 li:nth-child(-n+2){
+        display: none;
+    }
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        align-items: center;
+        height: 10vh;
+        width: 100vw;
+        padding: 0 3%;
+        background-color: transparent;
+    }
+}
+
+@media screen and (max-width:600px){
+    .logo{
+        width: 7rem;
+    }
+    .logo img{
+        height: 3rem;   
+        width: 6rem;
+    }
+    .hamburgerMenu{
+        right: -340px;
+        width: 240px;
+    }
+}
+
+@media screen and (min-width:1200px){
+
+    /* -n+4 gives 1st child to 4th one */
+    .hamburgerMenu ul li:nth-child(-n+4){
+        display: none;
+    }
+}
