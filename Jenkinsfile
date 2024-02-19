@@ -72,10 +72,9 @@ pipeline {
                       sh '''
                           git config user.email "mohsinabedeen78@gmail.com"
                           git config user.name "mohsin-786"
-                          NEW_IMAGE_NAME = "mohsin01/tesla-clone:${BUILD_NUMBER}"
                           sed -i "s|image: .*|image: $NEW_IMAGE_NAME|" tesla-clone-manifests/tesla-manifest.yml
-                          git add deployment.yml
-                          git commit -m 'Update deployment image to $NEW_IMAGE_NAME'
+                          git add tesla-clone-manifests/tesla-manifest.yml
+                          git commit -m 'Update deployment image to mohsin01/tesla-clone:${BUILD_NUMBER}'
                           git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                          '''
                     }
