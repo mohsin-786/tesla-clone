@@ -75,6 +75,7 @@ pipeline {
                           sed -i "s|image: .*|image: $NEW_IMAGE_NAME|" tesla-clone-manifests/tesla-manifest.yml
                           cd tesla-clone-manifests/
                           git add .
+                          echo "Hello"
                           git commit -m 'Update deployment image to mohsin01/tesla-clone:${BUILD_NUMBER}'
                           git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                          '''
