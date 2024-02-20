@@ -72,7 +72,7 @@ pipeline {
                       sh '''
                           git config user.email "mohsinabedeen78@gmail.com"
                           git config user.name "mohsin-786"
-                          sed -i "s|image: .*|image: $NEW_IMAGE_NAME|" tesla-clone-manifests/tesla-manifest.yml
+                          sed -i "s|image: .*|image: mohsin01/tesla-clone:${BUILD_NUMBER}|" tesla-clone-manifests/tesla-manifest.yml
                           cd tesla-clone-manifests/
                           git add .
                           echo "Hello"
