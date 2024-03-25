@@ -6,9 +6,9 @@ on:
     - main
 
 jobs:
-  build-scan-push:
-    runs-on: ubuntu-latest
-    steps:
+  # build-scan-push:
+  #   runs-on: ubuntu-latest
+  #   steps:
     # - name: Checkout repository
     #   uses: actions/checkout@v2
 
@@ -42,7 +42,7 @@ jobs:
     #     severity: CRITICAL,HIGH
 
   deploy:
-    needs: build-scan-push
+    # needs: build-scan-push
     runs-on: ubuntu-latest
     steps:
     # - name: Install kubectl
