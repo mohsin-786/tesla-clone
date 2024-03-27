@@ -63,15 +63,28 @@ jobs:
 
     - name: Update deployment file
       run: |
+        git config user.email "mohsinabedeen78@gmail.com"
+        git config user.name "mohsin-786"
+        IMAGE_NAME = "mohsin01/tesla-clone:$(( github.run_number }}"
         cd manifests-k8s/tesla-clone-manifests/
-        sed -i "s|image: .*|image: mohsin01/tesla-clone:${{ github.run_number }}|" tesla-manifest.yml
+        sed -i "s|image: .*|image: $IMAGE_NAME|" tesla-manifest.yml
+        git add tesla-manifest.yml
+        git commit -m "Update deployment image to $IMAGE_NAME"
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+          github_token: ${{ secrets.GH_TOKEN}}
+          branch: main
 
     # - name: Update kubeconfig
     #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
 
     - name: Apply the deployment file
       # run: kubectl apply -f tesla-manifest.yml
-      run: ls
+      run: |
+        cd manifests-k8s/tesla-clone-manifests/ && ls && cat tesla-manifest.yml
+        
       
     
 
