@@ -60,6 +60,7 @@ jobs:
       with:
         repository: mohsin-786/manifests-k8s
         path: manifests-k8s
+        token: ${{ secrets.GH_TOKEN }}
 
     - name: Update deployment file
       run: |
