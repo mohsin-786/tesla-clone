@@ -76,6 +76,7 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
           github_token: ${{ secrets.GH_TOKEN}}
+          repository: mohsin-786/manifests-k8s
           branch: main
 
     # - name: Update kubeconfig
