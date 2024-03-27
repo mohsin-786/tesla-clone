@@ -42,7 +42,7 @@ jobs:
          severity: CRITICAL,HIGH
 
   deploy:
-    # needs: build-scan-push
+    needs: build-scan-push
     runs-on: ubuntu-latest
     steps:
     - name: Install kubectl
