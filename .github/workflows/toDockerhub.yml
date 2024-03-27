@@ -66,18 +66,14 @@ jobs:
         cd manifests-k8s/
         git config user.email "mohsinabedeen78@gmail.com"
         git config user.name "mohsin-786"
+        GIT_USER_NAME="mohsin-786"
+        GIT_REPO_NAME="manifests-k8s"
         IMAGE_NAME="mohsin01/tesla-clone:${{ github.run_number }}"
         cd tesla-clone-manifests/
         sed -i "s|image: .*|image: $IMAGE_NAME|" tesla-manifest.yml
         git add tesla-manifest.yml
         git commit -m "Update deployment image to $IMAGE_NAME"
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-          github_token: ${{ secrets.GH_TOKEN}}
-          repository: mohsin-786/manifests-k8s
-          branch: main
+        git push https://${{GH_TOKEN}}@github.com/$GIT_USER_NAME/$GIT_REPO_NAME HEAD:main
 
     # - name: Update kubeconfig
     #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
