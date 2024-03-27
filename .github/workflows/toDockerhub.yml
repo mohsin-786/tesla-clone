@@ -63,7 +63,7 @@ jobs:
 
     - name: Update deployment file
       run: |
-        cd manifsts-k8s/
+        cd manifests-k8s/
         git config user.email "mohsinabedeen78@gmail.com"
         git config user.name "mohsin-786"
         IMAGE_NAME = "mohsin01/tesla-clone:$(( github.run_number }}"
