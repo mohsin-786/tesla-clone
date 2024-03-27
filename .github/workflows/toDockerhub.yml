@@ -73,7 +73,7 @@ jobs:
         sed -i "s|image: .*|image: $IMAGE_NAME|" tesla-manifest.yml
         git add tesla-manifest.yml
         git commit -m "Update deployment image to $IMAGE_NAME"
-        git push https://${{GH_TOKEN}}@github.com/$GIT_USER_NAME/$GIT_REPO_NAME HEAD:main
+        git push https://${{GH_TOKEN}}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
     # - name: Update kubeconfig
     #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
