@@ -3,7 +3,7 @@ name: Deploy to EKS
 on:
   push:
     branches:
-    - main
+    - master
 
 jobs:
   build-scan-push:
@@ -61,48 +61,51 @@ jobs:
     #      vuln-type: os,library
     #      severity: CRITICAL,HIGH
 
-  # deploy:
-  #   needs: build-scan-push
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Install kubectl
-  #     uses: azure/setup-kubectl@v3
+  deploy:
+    needs: build-scan-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
     
-  #   - name: Configure AWS credentials
-  #     uses: aws-actions/configure-aws-credentials@v2
-  #     with:
-  #       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #       aws-region: us-east-1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-  #   - name: Checkout manifests-k8s repository
-  #     uses: actions/checkout@v2
-  #     with:
-  #       repository: mohsin-786/manifests-k8s
-  #       path: manifests-k8s
-  #       token: ${{ secrets.GH_TOKEN }}
+    - name: Checkout manifests-k8s repository
+      uses: actions/checkout@v2
+      with:
+        repository: mohsin-786/manifests-k8s
+        path: manifests-k8s
+        token: ${{ secrets.GH_TOKEN }}
 
-  #   - name: Update deployment file
-  #     run: |
-  #       cd manifests-k8s/
-  #       git config user.email "mohsinabedeen78@gmail.com"
-  #       git config user.name "mohsin-786"
-  #       GIT_USER_NAME="mohsin-786"
-  #       GIT_REPO_NAME="manifests-k8s"
-  #       IMAGE_NAME="mohsin01/tesla-clone:${{ github.run_number }}"
-  #       cd tesla-clone-manifests/
-  #       sed -i "s|image: .*|image: $IMAGE_NAME|" tesla-manifest.yml
-  #       git add tesla-manifest.yml
-  #       git commit -m "Update deployment image to $IMAGE_NAME"
-  #       git push https://${{ secrets.GH_TOKEN }}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+    - name: Update deployment file
+      env:
+       REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+       REPOSITORY: my-repo
+       IMAGE_TAG: latest
+      run: |
+        cd manifests-k8s/
+        git config user.email "mohsinabedeen78@gmail.com"
+        git config user.name "mohsin-786"
+        GIT_USER_NAME="mohsin-786"
+        GIT_REPO_NAME="manifests-k8s"
+        IMAGE_NAME="$REGISTRY/$REPOSITORY:$IMAGE_TAG"
+        cd tesla-clone-manifests/
+        sed -i "s|image: .*|image: $IMAGE_NAME|" tesla-manifest.yml
+        git add tesla-manifest.yml
+        git commit -m "Update deployment image to $IMAGE_NAME"
+        git push https://${{ secrets.GH_TOKEN }}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
-  #   # - name: Update kubeconfig
-  #   #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
+    # - name: Update kubeconfig
+    #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
 
-  #   - name: Apply the deployment file
-  #     # run: kubectl apply -f tesla-manifest.yml
-  #     run: |
-  #       cd manifests-k8s/tesla-clone-manifests/ && ls && cat tesla-manifest.yml
+    - name: Apply the deployment file
+      run: |
+        cd manifests-k8s/tesla-clone-manifests/ && kubectl apply -f tesla-manifest.yml
         
       
     
