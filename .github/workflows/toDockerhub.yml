@@ -105,8 +105,8 @@ jobs:
         git commit -m "Update deployment image to $IMAGE_NAME"
         git push https://${{ secrets.GH_TOKEN }}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
 
-    # - name: Update kubeconfig
-    #   run: aws eks update-kubeconfig --name sins-cluster --region us-east-1
+    - name: Update kubeconfig
+      run: aws eks update-kubeconfig --name my-cluster --region us-east-1
 
     - name: Apply the deployment file
       run: |
